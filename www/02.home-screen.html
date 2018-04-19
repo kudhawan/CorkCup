@@ -1,0 +1,71 @@
+<html lang="en">
+    <head>
+        <title>Hybrid Mobile App Template</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta charset utf="8">
+        <!--font-awesome-css-->
+        <link rel="stylesheet" href="css/font-awesome.css"> 
+		<!--bootstrap-->
+		<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+		<!--bxslider-->
+		<link rel="stylesheet" href="css/jquery.bxslider.css">
+		<!--custom css-->
+		<link href="css/style.css" rel="stylesheet" type="text/css" >
+		<!--mobile css-->
+		<link rel="stylesheet" href="css/card.css">
+        <!--component-css-->
+		<!--default-js-->
+		<script src="js/jquery.min.js"></script>
+		<!--bootstrap-js-->
+		<script src="js/bootstrap.min.js"></script>
+		<!--mobile-js-->
+		<!--bxslider-js-->
+		<script src="js/jquery.bxslider.js"></script>
+		<!--font-embed-->
+    	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+
+
+
+					<div class="home-screen">
+						<div class="splash-logo home-position">
+							<img src="images/splash-logo.png" alt="">
+						</div>
+						<div class="app-menu-navigation">
+							<ul>
+								<li><button onclick="window.location.href='03.getting-started.html'" class="navigate">GETTING STARTED</button></li>
+								<li><button onclick="window.location.href='04.rules.html'" class="navigate">RULES</button></li>
+								<li><button onclick="window.location.href='05.game-play-board.html'" class="navigate">PLAY</button></li>
+								<li><button onclick="window.location.href='08.buy-more-cards.html'" class="navigate">GET MORE CARDS</button></li>
+							</ul>
+						</div>
+					</div>
+
+					
+
+
+    </body>
+	
+	<script src="js/scripts.js"></script>
+	<script>
+		$(document).ready(function(){
+			$('.bxslider').bxSlider({
+				  auto: false,
+				  responsive: true,
+				  autoControls: false,
+				  controls: false,
+				  pager: true
+			});
+		});
+	</script>
+	<script type="text/javascript" src='js/card-script.js'></script>
+	<script>
+	$(document).ready(function(){
+		  animate_card(360);
+	});
+	</script>
+
+	
+</html>					

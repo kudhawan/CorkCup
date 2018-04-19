@@ -1,0 +1,122 @@
+<html lang="en">
+    <head>
+        <title>Hybrid Mobile App Template</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta charset utf="8">
+        <!--font-awesome-css-->
+        <link rel="stylesheet" href="css/font-awesome.css"> 
+		<!--bootstrap-->
+		<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+		<!--bxslider-->
+		<link rel="stylesheet" href="css/jquery.bxslider.css">
+		<!--custom css-->
+		<link href="css/style.css" rel="stylesheet" type="text/css" >
+		<!--mobile css-->
+		<link rel="stylesheet" href="css/card.css">
+        <!--component-css-->
+		<!--default-js-->
+		<script src="js/jquery.min.js"></script>
+		<!--bootstrap-js-->
+		<script src="js/bootstrap.min.js"></script>
+		<!--mobile-js-->
+		<!--bxslider-js-->
+		<script src="js/jquery.bxslider.js"></script>
+		<!--font-embed-->
+    	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+
+
+
+				<div class="page-screen">
+						<div class="app-bar-navigation row">
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-2 text-left">
+								<div class="app-bar-menu-icon"><a href="02.home-screen.html"><span class="fa fa-angle-left"></span></a></div>
+							</div>
+							<div class="app-bar-title col-lg-6 col-md-6 col-sm-6 col-xs-8 text-center">
+								<div class="app-bar-title">Game Play</div>
+							</div>
+							<div class="app-bar-search col-lg-3 col-md-3 col-sm-3 col-xs-2 text-right">
+								<!--<div class="app-bar-search"><a href="#"><span class="fa fa-plus"></span> Get More Cards</a></div>-->
+							</div>
+						</div>
+						  
+						
+						<div class="app-content-game-play">
+							<div class="game-play-top">
+								<div class="name-black-top">Team Name A</div>
+								
+								<div class="button-select">
+									<div class="input-group">
+									  <span class="input-group-btn">
+										  <button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="quant[2]">
+											<span class="glyphicon glyphicon-minus"></span>
+										  </button>
+									  </span>
+									  <input type="text" name="quant[2]" class="form-control input-number" value="10" min="1" max="100">
+									  <span class="input-group-btn">
+										  <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[2]">
+											  <span class="glyphicon glyphicon-plus"></span>
+										  </button>
+									  </span>
+									</div>
+								</div>
+							</div>
+							<div class="app-label-icon1">
+								<img src="images/take-my-corks-cut1.png" class="max-width-img" alt="">
+							</div>
+							<div class="game-play-middle"><div class="button-draw"><button onclick="window.location.href='06.draw-penalty.html'" class="navigate" data-page-name="draw-penalty" data-page-trans="slide-in-from-right">DRAW PENALTY</button></div></div>
+							
+							<div class="game-play-bottom">
+								<div class="button-select">
+									<div class="input-group">
+									  <span class="input-group-btn">
+										  <button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="quant[1]">
+											<span class="glyphicon glyphicon-minus"></span>
+										  </button>
+									  </span>
+									  <input type="text" name="quant[1]" class="form-control input-number" value="8" min="1" max="100">
+									  <span class="input-group-btn">
+										  <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[1]">
+											  <span class="glyphicon glyphicon-plus"></span>
+										  </button>
+									  </span>
+									</div>
+								</div>
+								<div class="name-black-bottom">Team Name B</div>
+							</div>
+						</div> 
+						
+						<div class="text-center">
+							<button class="button-pick navigate" onclick="window.location.href='08.buy-more-cards.html'" data-page-name="home-screen" data-page-trans="slide-in-from-left">Get More Cards</button>
+						</div>
+						
+					</div>
+
+					
+
+
+    </body>
+	
+	<script src="js/scripts.js"></script>
+	<script>
+		$(document).ready(function(){
+			$('.bxslider').bxSlider({
+				  auto: true,
+				  responsive: true,
+				  autoControls: false,
+				  controls: false,
+				  pager: true
+			});
+		});
+	</script>
+	<script type="text/javascript" src='js/card-script.js'></script>
+	<script>
+	$(document).ready(function(){
+		  animate_card(360);
+	});
+	</script>
+
+	
+</html>					

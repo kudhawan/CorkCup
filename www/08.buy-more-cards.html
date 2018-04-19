@@ -1,0 +1,78 @@
+<html lang="en">
+    <head>
+        <title>Hybrid Mobile App Template</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta charset utf="8">
+        <!--font-awesome-css-->
+        <link rel="stylesheet" href="css/font-awesome.css"> 
+		<!--bootstrap-->
+		<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+		<!--bxslider-->
+		<link rel="stylesheet" href="css/jquery.bxslider.css">
+		<!--custom css-->
+		<link href="css/style.css" rel="stylesheet" type="text/css" >
+		<!--mobile css-->
+		<link rel="stylesheet" href="css/card.css">
+        <!--component-css-->
+		<!--default-js-->
+		<script src="js/jquery.min.js"></script>
+		<!--bootstrap-js-->
+		<script src="js/bootstrap.min.js"></script>
+		<!--mobile-js-->
+		<!--bxslider-js-->
+		<script src="js/jquery.bxslider.js"></script>
+		<!--font-embed-->
+    	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+
+
+
+					<div class="skip-screen" style="background:#fff;">
+						<!-- App Bar Navigation -->
+						<div class="app-bar-navigation row">
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-2 text-left">
+								<div class="app-bar-menu-icon" ><a href="05.game-play-board.html" style="color:#b60f16;"><span class="fa fa-angle-left"></span></a></div>
+							</div>
+							<div class="app-bar-title col-lg-6 col-md-6 col-sm-6 col-xs-8 text-center">
+								<div class="app-bar-title" style="color:#b60f16;">Get More Cards</div>
+							</div>
+							<div class="app-bar-search col-lg-3 col-md-3 col-sm-3 col-xs-2 text-right">
+								<!--<div class="app-bar-search"><a href="#"><span class="fa fa-search"></span></a></div>-->
+							</div>
+						</div>
+						<div class="app-menu-navigation">
+							<ul>
+								<li><button onclick="window.location.href='#'" class="navigate"><span>Sack Pack</span> - $1.99 <span>/ 60 Unique Cards</span></button></li>
+								<li><button onclick="window.location.href='#'" class="navigate"><span>Back PacK</span> - $1.99 <span>/ 60 Unique Cards</span></button></li>
+								<li><button onclick="window.location.href='#'" class="navigate"><span>Plaque PacK</span> - $1.99 <span>/ 60 Unique Cards</span></button></li>
+								<li><button onclick="window.location.href='#'" class="navigate"><span>College PacK</span> - $2.99 <span>/ 60 Unique Cards</span></button></li>
+								<li><button onclick="window.location.href='#'" class="navigate"><span>All Pack</span> - $7.62 <span>/ 100 Unique Cards</span></button></li>
+							</ul>
+						</div>  
+						
+					</div>
+    </body>
+	
+	<script src="js/scripts.js"></script>
+	<script>
+		$(document).ready(function(){
+			$('.bxslider').bxSlider({
+				  auto: false,
+				  responsive: true,
+				  autoControls: false,
+				  controls: false,
+				  pager: true
+			});
+		});
+	</script>
+	<script type="text/javascript" src='js/card-script.js'></script>
+	<script>
+	$(document).ready(function(){
+		  animate_card(360);
+	});
+	</script>
+
+	
+</html>					

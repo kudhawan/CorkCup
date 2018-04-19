@@ -1,0 +1,139 @@
+
+.card-position-move {
+	position:relative;
+	padding-left:160px;
+	padding-top:60px;
+}
+
+/*single card*/
+.card{
+width: 140px;
+height: 180px;
+border: 1px solid #ddd;
+border-radius: 5px;
+position: absolute;
+background-color: white;
+background-image: url("../images/card.png");
+background-size: contain;
+background-repeat: no-repeat;
+cursor: pointer;
+text-align: center;
+
+/*all transition to take 1s */
+transition:all 1s;
+-ms-transition:all 1s;
+-webkit-transition:all 1s;
+-moz-transition:all 1s;
+
+/*set card transform origin to 20% from x-axis and 80% from y-axis */
+transform-origin: 20% 80%;
+-ms-transform-origin: 20% 80%;
+-webikit-transform-origin: 20% 80%;
+-moz-transform-origin: 20% 80%;
+
+/*make card non selectable*/
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+
+/*red colored card*/
+.card.red{
+color:red;
+}
+
+/*
+while opening a card, again shift transform origin 
+to vertical and horizontal center axis 
+to give an actual flip effect
+*/
+.card.open{
+transform-origin: center center !important;
+-ms-transform-origin: center center !important;
+-webikit-transform-origin: center center !important;
+-moz-transform-origin: center center !important;
+-webkit-transform: rotateY(180deg) !important;
+transform:  rotateY( 180deg ) !important;
+}
+
+/*to show card value */
+/*rotate the text to 180deg so the text is not mirrored when card is flipped*/
+/* opened card text*/
+.card.opened span:after{
+content:attr(data-title);
+transform: rotateY( 180deg );
+-webkit-transform: rotateY( 180deg );
+font-size: 40px;
+display: block;
+}
+
+
+
+/*hide background from open card */
+.card.opened{
+	position:absolute;
+	top:20px;
+	left:30px;
+	width:300px;
+	height:400px;
+z-index:100 !important;	
+background: #fff;
+
+
+}
+
+.card > .content-card {
+	border:1px solid #fff;
+	border-radius:4px;
+	transform: rotateY(-180deg);
+	-webkit-transform: rotateY(-180deg);
+	display:none;
+}
+
+.card.open.opened > .content-card {
+	border:1px solid #fff;
+	transform: rotateY(-180deg);
+	display:block;
+	height:100% !important;
+	animation:0.6s ease 0s normal forwards 1 fadein;
+-webkit-animation:0.6s ease 0s normal forwards 1 fadein;
+opacity:1
+}
+
+@keyframes fadein{
+    0%{opacity:0}
+    80%{opacity:0}
+    100%{opacity:1}
+}
+
+@-webkit-keyframes fadein{
+    0%{opacity:0}
+    80%{opacity:0}
+    100%{opacity:1}
+}
+
+
+
+
+
+
+button{
+	cursor: pointer;
+}
+
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
