@@ -238,6 +238,10 @@ reset_cards();
 
 $(document).ready(function(){
 	stack_cards(0.2);
+
+		// disable card click for prevent user click
+		$('.card').off('click');
+
 		//card click event
 		$('.card').click(function(){
 			var card = $(this);
@@ -247,9 +251,13 @@ $(document).ready(function(){
 			},300);
 		});	
 	
-	getCardContent(function(output) {		
+	getCardContent(function(output) {
+		
 		// click event listen for card
 		$("#pack_cont").on('click', '.card', function(){
+			
+			$(this).siblings('.card').off('click');
+			
 			// call only while card open
 			if($(this).hasClass('open')) {
 				var div_open = $(this);
@@ -261,16 +269,20 @@ $(document).ready(function(){
 			}
 
 			if($(this).hasClass('opened')) {
+				close_all_cards();
 				setTimeout(function(){
 					$('#game-play')[0].click();
 				}, 1000);
 			}
 		});
 		
-		//trigger click event for automatically open card
+		// trigger click event for automatically open card
 		setTimeout(function(){
+			// enable card click for prevent user click
+			$('.card').on('click');
+		
 			var len = $(".card").length;
-			var random = Math.floor( Math.random() * len ) + 1;
+			var random = Math.floor( Math.random() * len ) + 1;			
 			$('.card').eq(random).click();
 		}, 2000);
 
@@ -287,29 +299,44 @@ $(document).ready(function(){
 		.ajaxStop(function () {
 			$loader.hide();
 		});
-
-	// get card content
-	function getCardContent(handleData) {
-		// check aggressive mode enabled or not
-		var is_aggressive = $('#cmn-toggle-4').is(':checked') ? 'y': 'n';
-
-		$.ajax({
-			url: 'http://45.79.7.27:81/corkcup/card/getaCard.php?is_aggressive=' + is_aggressive,
-			accepts: 'application/json',
-			success: function(result) {
-				handleData(result);
-			}, 
-			error: function(error) {
-				var response = error.responseText;
-				// response = response ? JSON.parse(response): {};
-				console.log(response);
-
-				var obj = {"id":"95","name":"Milhouse","description":"You are to be ignored by everyone in the game, for the next 5 rounds. Anyone who acknowledges you must drink","is_unique":"1"};
-				console.log(obj)
-				handleData(obj);
-			}
-		});
-	}
-
 });
 
+// get card content
+function getCardContent(handleData) {
+	// check aggressive mode enabled or not
+	var is_aggressive = $('#cmn-toggle-4').is(':checked') ? 'y': 'n';
+	var data = [{ "id":"1"}, { "id":"2"}]
+
+	$.ajax({
+		url: 'http://45.79.7.27:81/corkcup/card/getaCard.php?is_aggressive=' + is_aggressive,
+		headers: {
+			Accept: 'application/json'
+		},
+		data: data,
+		success: function(result) {
+			handleData(result);
+		}, 
+		error: function(error) {
+			console.log(error);
+		}
+	});
+}
+
+function updateScore(sign, position) {
+
+	var data = [{ "id":1,  "sign":sign }];
+	
+	$.ajax({
+		url: 'http://45.79.7.27:81/corkcup/team/updateScore.php',
+		headers: {
+			Accept: 'application/json'
+		},
+		data:  data,
+		success: function(result) {
+			console.log(result);
+		}, 
+		error: function(error) {
+			console.log(error);
+		}
+	});
+}
