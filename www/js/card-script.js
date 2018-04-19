@@ -305,14 +305,12 @@ $(document).ready(function(){
 function getCardContent(handleData) {
 	// check aggressive mode enabled or not
 	var is_aggressive = $('#cmn-toggle-4').is(':checked') ? 'y': 'n';
-	var data = [{ "id":"1"}, { "id":"2"}]
 
 	$.ajax({
 		url: 'http://45.79.7.27:81/corkcup/card/getaCard.php?is_aggressive=' + is_aggressive,
 		headers: {
 			Accept: 'application/json'
 		},
-		data: data,
 		success: function(result) {
 			handleData(result);
 		}, 
@@ -322,18 +320,23 @@ function getCardContent(handleData) {
 	});
 }
 
-function updateScore(sign, position) {
-
-	var data = [{ "id":1,  "sign":sign }];
-	
+function updateScore(sign, id) {
 	$.ajax({
 		url: 'http://45.79.7.27:81/corkcup/team/updateScore.php',
+		type: 'POST',
 		headers: {
-			Accept: 'application/json'
+			'Accept': 'application/json',
+			'Content-Type': 'application/json'
 		},
-		data:  data,
+		data:  { "id":id,  "sign":sign },
 		success: function(result) {
 			console.log(result);
+			var teams = result.teams;
+			if(teams) {
+				for(var i=0; i<teams.length; i++) {
+					$("input[name=" + "'quant[" + teams[i].id + "]']").val(teams[i].scores);
+				}
+			}
 		}, 
 		error: function(error) {
 			console.log(error);
