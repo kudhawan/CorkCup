@@ -331,11 +331,8 @@ function updateScore(sign, id) {
 		data:  { "id":id,  "sign":sign },
 		success: function(result) {
 			console.log(result);
-			var teams = result.teams;
-			if(teams) {
-				for(var i=0; i<teams.length; i++) {
-					$("input[name=" + "'quant[" + teams[i].id + "]']").val(teams[i].scores);
-				}
+			if(result){
+				$("input[name=" + "'quant[" + result.id + "]']").val(result.scores);
 			}
 		}, 
 		error: function(error) {
