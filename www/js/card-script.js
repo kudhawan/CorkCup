@@ -237,21 +237,18 @@ reset_cards();
 }
 
 $(document).ready(function(){
-	stack_cards(0.2);
-
-		// disable card click for prevent user click
-		$('.card').off('click');
+	stack_cards(0.2);	
 
 		//card click event
-		$('.card').click(function(){
-			var card = $(this);
-			card.toggleClass('open');
-			setTimeout(function(){
-				card.toggleClass('opened');
-			},300);
-		});	
+		// $('.card').click(function(){
+		// 	var card = $(this);
+		// 	card.toggleClass('open');
+		// 	setTimeout(function(){
+		// 		card.toggleClass('opened');
+		// 	},300);
+		// });	
 	
-	getCardContent(function(output) {
+	getCardContent(function(result) {
 		
 		// click event listen for card
 		$("#pack_cont").on('click', '.card', function(){
@@ -261,8 +258,9 @@ $(document).ready(function(){
 			// call only while card open
 			if($(this).hasClass('open')) {
 				var div_open = $(this);
-				var tmp = $(div_open).find('.card-back-top').children().remove();
-				$(div_open).find('.card-back-top,.rotate').text(output.id).append(tmp);
+				var top_tmp = $(div_open).find('.card-back-top').children().remove();
+				var output = result[0];
+				$(div_open).find('.card-back-top,.rotate').text(output.id).append(top_tmp);
 				$(div_open).find('.sub-heading').text(output.name);
 				$(div_open).find('.paragraph').text(output.description);
 				
@@ -278,14 +276,17 @@ $(document).ready(function(){
 		
 		// trigger click event for automatically open card
 		setTimeout(function(){
-			// enable card click for prevent user click
-			$('.card').on('click');
-		
-			var len = $(".card").length;
-			var random = Math.floor( Math.random() * len ) + 1;			
-			$('.card').eq(random).click();
-		}, 2000);
+			// disable card click for prevent user click
+			$('.card').off('click');	
 
+			var len = $(".card").length;
+			var random = Math.floor( Math.random() * len ) + 1;
+			var card = $('.card').eq(random);
+			card.toggleClass('open');
+			setTimeout(function(){
+				card.toggleClass('opened');
+			},300);
+		}, 2000);
 	});
 
 	
@@ -307,10 +308,11 @@ function getCardContent(handleData) {
 	var is_aggressive = $('#cmn-toggle-4').is(':checked') ? 'y': 'n';
 
 	$.ajax({
-		url: 'http://45.79.7.27:81/corkcup/card/getaCard.php?is_aggressive=' + is_aggressive,
-		headers: {
-			Accept: 'application/json'
-		},
+		url: 'http://45.79.7.27:81/corkcup/card/getaCard.php',
+		type: 'POST',
+		contentType: "application/json; charset=utf-8",
+		data:JSON.stringify({"id1":"1","id2":"2","is_aggressive": is_aggressive }),
+		traditional: true,
 		success: function(result) {
 			handleData(result);
 		}, 
@@ -324,11 +326,9 @@ function updateScore(sign, id) {
 	$.ajax({
 		url: 'http://45.79.7.27:81/corkcup/team/updateScore.php',
 		type: 'POST',
-		headers: {
-			'Accept': 'application/json',
-			'Content-Type': 'application/json'
-		},
-		data:  { "id":id,  "sign":sign },
+		contentType: "application/json; charset=utf-8",
+		data: JSON.stringify({ "id":id,  "sign":sign }),
+		traditional: true,
 		success: function(result) {
 			console.log(result);
 			if(result){
