@@ -252,20 +252,8 @@ $(document).ready(function(){
 		
 		// click event listen for card
 		$("#pack_cont").on('click', '.card', function(){
-			
 			$(this).siblings('.card').off('click');
 			
-			// call only while card open
-			if($(this).hasClass('open')) {
-				var div_open = $(this);
-				var top_tmp = $(div_open).find('.card-back-top').children().remove();
-				var output = result[0];
-				$(div_open).find('.card-back-top,.rotate').text(output.id).append(top_tmp);
-				$(div_open).find('.sub-heading').text(output.name);
-				$(div_open).find('.paragraph').text(output.description);
-				
-			}
-
 			if($(this).hasClass('opened')) {
 				close_all_cards();
 				setTimeout(function(){
@@ -285,6 +273,12 @@ $(document).ready(function(){
 			card.toggleClass('open');
 			setTimeout(function(){
 				card.toggleClass('opened');
+				var top_tmp = card.find('.card-back-top').children().remove();
+				var output = result[0];
+				card.find('.card-back-top,.rotate').text(output.id).append(top_tmp);
+				card.find('.sub-heading').text(output.name);
+				card.find('.paragraph').text(output.description);
+
 			},300);
 		}, 2000);
 	});
@@ -324,13 +318,8 @@ function getCardContent(handleData) {
 
 function updateScore(sign, id) {
 	$.ajax({
-		url: 'http://45.79.7.27:81/corkcup/team/updateScore.php',
-		type: 'POST',
-		contentType: "application/json; charset=utf-8",
-		data: JSON.stringify({ "id":id,  "sign":sign }),
-		traditional: true,
+		url: 'http://45.79.7.27:81/corkcup/team/updateScore.php?id=' +id+ "&sign=" + sign,
 		success: function(result) {
-			console.log(result);
 			if(result){
 				$("input[name=" + "'quant[" + result.id + "]']").val(result.scores);
 			}
