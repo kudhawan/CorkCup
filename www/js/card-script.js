@@ -302,11 +302,7 @@ function getCardContent(handleData) {
 	var is_aggressive = $('#cmn-toggle-4').is(':checked') ? 'y': 'n';
 
 	$.ajax({
-		url: 'http://45.79.7.27:81/corkcup/card/getaCard.php',
-		type: 'POST',
-		contentType: "application/json; charset=utf-8",
-		data:JSON.stringify({"id1":"1","id2":"2","is_aggressive": is_aggressive }),
-		traditional: true,
+		url: 'http://45.79.7.27:81/corkcup/card/getaCard.php?is_aggressive='+ is_aggressive + '&id1=1&id2=2',
 		success: function(result) {
 			handleData(result);
 		}, 

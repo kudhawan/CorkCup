@@ -24,4 +24,5 @@
     </platform>
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <engine name="android" spec="^7.0.0" />
+    <plugin name="cordova-plugin-stripe" spec="^1.5.3" />
 </widget>
