@@ -300,6 +300,10 @@ $(document).ready(function(){
 function getCardContent(handleData) {
 	// check aggressive mode enabled or not
 	var is_aggressive = $('#cmn-toggle-4').is(':checked') ? 'y': 'n';
+	var purchased = [];
+	if(window.localStorage.getItem('purchased') != null) {
+		purchased = JSON.parse(window.localStorage.getItem('purchased'));
+	}
 
 	$.ajax({
 		url: 'http://45.79.7.27:81/corkcup/card/getaCard.php?is_aggressive='+ is_aggressive + '&id1=1&id2=2',
@@ -324,4 +328,34 @@ function updateScore(sign, id) {
 			console.log(error);
 		}
 	});
+}
+
+function buy(productId) {
+	inAppPurchase
+		.buy(productId)
+		.then(function (data) {
+			console.log(JSON.stringify(data));
+			var purchased = [];
+			if(window.localStorage.getItem('purchased') != null) {
+				purchased = JSON.parse(window.localStorage.getItem('purchased'));
+			}
+			purchased.push(data);
+			window.localStorage.setItem('purchased', JSON.stringify(purchased));
+		})
+		.catch(function (err) {
+			console.log(err);
+		});
+}
+
+
+function restore() {
+	inAppPurchase
+		.restorePurchases()
+		.then(function (purchases) {
+			console.log(JSON.stringify(purchases));
+			window.localStorage.setItem('purchased', JSON.stringify(purchases));
+		})
+		.catch(function (err) {
+			console.log(err);
+		});
 }

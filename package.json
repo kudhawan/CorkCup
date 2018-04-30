@@ -1,6 +1,6 @@
 {
-  "name": "io.cordova.hellocordova",
-  "version": "1.0.0",
+  "name": "com.radiata.corkcup",
+  "version": "0.0.1",
   "displayName": "CorkCup",
   "cordova": {
     "platforms": [
@@ -8,12 +8,13 @@
     ],
     "plugins": {
       "cordova-plugin-whitelist": {},
-      "cordova-plugin-stripe": {}
+      "cordova-plugin-inapppurchase": {}
     }
   },
   "dependencies": {
     "cordova-android": "^7.0.0",
-    "cordova-plugin-stripe": "^1.5.3",
+    "cordova-plugin-inapppurchase": "^1.2.0",
     "cordova-plugin-whitelist": "1"
-  }
+  },
+  "devDependencies": {}
 }
