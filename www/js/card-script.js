@@ -237,7 +237,6 @@ reset_cards();
 }
 
 $(document).ready(function(){
-	stack_cards(0.2);	
 
 		//card click event
 		// $('.card').click(function(){
@@ -247,41 +246,49 @@ $(document).ready(function(){
 		// 		card.toggleClass('opened');
 		// 	},300);
 		// });	
-	
-	getCardContent(function(result) {
-		
-		// click event listen for card
-		$("#pack_cont").on('click', '.card', function(){
-			$(this).siblings('.card').off('click');
+		document.addEventListener("deviceready", function () {
 			
-			if($(this).hasClass('opened')) {
-				close_all_cards();
-				setTimeout(function(){
-					$('#game-play')[0].click();
-				}, 1000);
-			}
-		});
+			stack_cards(0.2);	
+			
+			getCardContent(function(result) {
 		
-		// trigger click event for automatically open card
-		setTimeout(function(){
-			// disable card click for prevent user click
-			$('.card').off('click');	
-
-			var len = $(".card").length;
-			var random = Math.floor( Math.random() * len ) + 1;
-			var card = $('.card').eq(random);
-			card.toggleClass('open');
-			setTimeout(function(){
-				card.toggleClass('opened');
-				var top_tmp = card.find('.card-back-top').children().remove();
-				var output = result[0];
-				card.find('.card-back-top,.rotate').text(output.id).append(top_tmp);
-				card.find('.sub-heading').text(output.name);
-				card.find('.paragraph').text(output.description);
-
-			},300);
-		}, 2000);
-	});
+				// click event listen for card
+				$("#pack_cont").on('click', '.card', function(){
+					$(this).siblings('.card').off('click');
+					
+					if($(this).hasClass('opened')) {
+						close_all_cards();
+						setTimeout(function(){
+							$('#game-play')[0].click();
+						}, 1000);
+					}
+				});
+				
+				// trigger click event for automatically open card
+				setTimeout(function(){
+					// disable card click for prevent user click
+					$('.card').off('click');	
+		
+					var len = $(".card").length;
+					var random = Math.floor( Math.random() * len ) + 1;
+					var card = $('.card').eq(random);
+					card.toggleClass('open');
+					setTimeout(function(){
+						card.toggleClass('opened');
+						var bottom_tmp = card.find('.card-back-bottom').children().remove();
+						var top_tmp = card.find('.card-back-top').children().remove();
+						var output = result[0];
+						card.find('.card-back-top,.rotate').text(output.id).append(top_tmp);
+						card.find('.card-back-bottom,.rotate').text(output.id).append(bottom_tmp);
+						card.find('.sub-heading').text(output.name);
+						card.find('.paragraph').text(output.description);
+		
+					},300);
+				}, 2000);
+			});	
+		}, true);
+	
+	
 
 	
 
@@ -298,43 +305,43 @@ $(document).ready(function(){
 
 // get card content
 function getCardContent(handleData) {
-	// check aggressive mode enabled or not
-	var is_aggressive = $('#cmn-toggle-4').is(':checked') ? 'y': 'n';
-	var purchased = [];
-	var products = [];
-	var platform = device.platform;
+		// check aggressive mode enabled or not
+		var is_aggressive = $('#cmn-toggle-4').is(':checked') ? 'y': 'n';
+		var purchased = [];
+		var products = [];
+		var platform = window.device.platform;
 
-	if(window.localStorage.getItem('purchased') != null) {
-		purchased = JSON.parse(window.localStorage.getItem('purchased'));
-	}
-
-	for(var i=0; i< purchased.length; i++) {
-		products.push({
-			productId: purchased[i].productId,
-			signature:purchased[i].signature,
-			receipt: purchased[i].receipt
-		});		
-	}
-	
-	var data = {
-		is_aggressive: is_aggressive,
-		id1: 'id1',
-		id2: 'id2',
-		products:  products,
-		platform: platform
-	};
-
-	$.ajax({
-		url: 'http://45.79.7.27:81/corkcup/card/getaCard.php',
-		type: 'POST',
-		data: data,
-		success: function(result) {
-			handleData(result);
-		}, 
-		error: function(error) {
-			console.log(error);
+		if(window.localStorage.getItem('purchased') != null) {
+			purchased = JSON.parse(window.localStorage.getItem('purchased'));
 		}
-	});
+
+		for(var i=0; i< purchased.length; i++) {
+			products.push({
+				productId: purchased[i].productId,
+				signature:purchased[i].signature,
+				receipt: purchased[i].receipt
+			});		
+		}
+		
+		var data = {
+			is_aggressive: is_aggressive,
+			id1: 'id1',
+			id2: 'id2',
+			products:  products,
+			platform: platform
+		};
+
+		$.ajax({
+			url: 'http://45.79.7.27:81/corkcup/card/getaCard.php',
+			type: 'POST',
+			data: data,
+			success: function(result) {
+				handleData(result);
+			}, 
+			error: function(error) {
+				console.log(error);
+			}
+		});
 }
 
 function updateScore(sign, id) {
@@ -352,36 +359,40 @@ function updateScore(sign, id) {
 }
 
 function buy(productId) {
-	inAppPurchase
-		.buy(productId)
-		.then(function (data) {
-			console.log(JSON.stringify(data));
-			var purchased = [];
-			if(window.localStorage.getItem('purchased') != null) {
-				purchased = JSON.parse(window.localStorage.getItem('purchased'));
-			}
-			purchased.push(data);
-			window.localStorage.setItem('purchased', JSON.stringify(purchased));
+	document.addEventListener("deviceready", function () {
+		inAppPurchase
+			.buy(productId)
+			.then(function (data) {
+				console.log(JSON.stringify(data));
+				var purchased = [];
+				if(window.localStorage.getItem('purchased') != null) {
+					purchased = JSON.parse(window.localStorage.getItem('purchased'));
+				}
+				purchased.push(data);
+				window.localStorage.setItem('purchased', JSON.stringify(purchased));
 
-			updateCardBought();
-		})
-		.catch(function (err) {
-			console.log(err);
-		});
+				updateCardBought();
+			})
+			.catch(function (err) {
+				console.log(err);
+			});
+	}, false)
 }
 
 
 function restore() {
-	inAppPurchase
-		.restorePurchases()
-		.then(function (purchases) {
-			console.log(JSON.stringify(purchases));
-			window.localStorage.setItem('purchased', JSON.stringify(purchases));
-			updateCardBought();
-		})
-		.catch(function (err) {
-			console.log(err);
-		});
+	document.addEventListener("deviceready", function () {
+		inAppPurchase
+			.restorePurchases()
+			.then(function (purchases) {
+				console.log(JSON.stringify(purchases));
+				window.localStorage.setItem('purchased', JSON.stringify(purchases));
+				updateCardBought();
+			})
+			.catch(function (err) {
+				console.log(err);
+			});
+	}, false)
 }
 
 function updateCardBought() {
