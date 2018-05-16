@@ -9,13 +9,15 @@
     "plugins": {
       "cordova-plugin-whitelist": {},
       "cordova-plugin-inapppurchase": {},
-      "cordova-plugin-device": {}
+      "cordova-plugin-device": {},
+      "cordova-plugin-splashscreen": {}
     }
   },
   "dependencies": {
-    "cordova-android": "^7.0.0",
+    "cordova-android": "6.4.0",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-inapppurchase": "^1.2.0",
+    "cordova-plugin-splashscreen": "^5.0.2",
     "cordova-plugin-whitelist": "1"
   },
   "devDependencies": {}

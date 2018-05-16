@@ -2,6 +2,7 @@
 var card_container_width = $('#pack_cont').width();
 var total_cards = 30; //any number of cards will work
 var card_spacing = 10;
+var initial = true;
 
 //shuffle plugin
 (function($){
@@ -344,15 +345,18 @@ function getCardContent(handleData) {
 		});
 }
 
-function updateScore(sign, id) {
+function updateScore(sign, id) {	
+
 	$.ajax({
-		url: 'http://45.79.7.27:81/corkcup/team/updateScore.php?id=' +id+ "&sign=" + sign,
+		url: 'http://45.79.7.27:81/corkcup/team/updateScore.php?id=' +id+ "&sign=" + sign + "&initial=" + initial,
 		success: function(result) {
 			if(result){
 				$("input[name=" + "'quant[" + result.id + "]']").val(result.scores);
 			}
+			initial = initial ? !initial: initial;
 		}, 
 		error: function(error) {
+			initial = initial ? !initial: initial;
 			console.log(error);
 		}
 	});
