@@ -2,7 +2,6 @@
 var card_container_width = $('#pack_cont').width();
 var total_cards = 30; //any number of cards will work
 var card_spacing = 10;
-var initial = true;
 
 //shuffle plugin
 (function($){
@@ -246,7 +245,14 @@ $(document).ready(function(){
 		// 	setTimeout(function(){
 		// 		card.toggleClass('opened');
 		// 	},300);
-		// });	
+		// });
+		
+		var score1 = window.sessionStorage.getItem("1") ? window.sessionStorage.getItem("1") : 0;
+		var score2 = window.sessionStorage.getItem("2") ? window.sessionStorage.getItem("2") : 0;
+
+		$("input[name=" + "'quant[1]']").val(score1);
+		$("input[name=" + "'quant[2]']").val(score2);
+		
 		document.addEventListener("deviceready", function () {
 			
 			stack_cards(0.2);	
@@ -278,10 +284,8 @@ $(document).ready(function(){
 						card.toggleClass('opened');	
 						if(Array.isArray(result)) {												
 							var output = result[0];
-							var bottom_tmp = card.find('.card-back-bottom').children().remove();
 							var top_tmp = card.find('.card-back-top').children().remove();
 							card.find('.card-back-top,.rotate').text(output.id).append(top_tmp);
-							card.find('.card-back-bottom,.rotate').text(output.id).append(bottom_tmp);
 							card.find('.sub-heading').text(output.name);
 							card.find('.paragraph').text(output.description);
 						} else {
@@ -350,18 +354,26 @@ function getCardContent(handleData) {
 		});
 }
 
-function updateScore(sign, id) {	
+function updateScore(sign, id) {
+	var initial;
+
+	if(!window.sessionStorage.getItem("initial")) {
+		initial = true;
+		window.sessionStorage.setItem("initial", "false");
+	} else {
+		initial = false;
+	}
+		
 
 	$.ajax({
 		url: 'http://45.79.7.27:81/corkcup/team/updateScore.php?id=' +id+ "&sign=" + sign + "&initial=" + initial,
 		success: function(result) {
 			if(result){
 				$("input[name=" + "'quant[" + result.id + "]']").val(result.scores);
+				window.sessionStorage.setItem(result.id, result.scores);
 			}
-			initial = initial ? !initial: initial;
 		}, 
 		error: function(error) {
-			initial = initial ? !initial: initial;
 			console.log(error);
 		}
 	});
