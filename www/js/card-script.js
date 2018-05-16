@@ -275,14 +275,19 @@ $(document).ready(function(){
 					var card = $('.card').eq(random);
 					card.toggleClass('open');
 					setTimeout(function(){
-						card.toggleClass('opened');
-						var bottom_tmp = card.find('.card-back-bottom').children().remove();
-						var top_tmp = card.find('.card-back-top').children().remove();
-						var output = result[0];
-						card.find('.card-back-top,.rotate').text(output.id).append(top_tmp);
-						card.find('.card-back-bottom,.rotate').text(output.id).append(bottom_tmp);
-						card.find('.sub-heading').text(output.name);
-						card.find('.paragraph').text(output.description);
+						card.toggleClass('opened');	
+						if(Array.isArray(result)) {												
+							var output = result[0];
+							var bottom_tmp = card.find('.card-back-bottom').children().remove();
+							var top_tmp = card.find('.card-back-top').children().remove();
+							card.find('.card-back-top,.rotate').text(output.id).append(top_tmp);
+							card.find('.card-back-bottom,.rotate').text(output.id).append(bottom_tmp);
+							card.find('.sub-heading').text(output.name);
+							card.find('.paragraph').text(output.description);
+						} else {
+							card.find('.sub-heading').remove();
+							card.find('.paragraph').text(result);
+						}
 		
 					},300);
 				}, 2000);
