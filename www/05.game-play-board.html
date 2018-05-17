@@ -31,17 +31,24 @@
 
 
 				<div class="page-screen">
-						<div class="app-bar-navigation row">
-							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-2 text-left">
-								<div class="app-bar-menu-icon"><a href="02.home-screen.html"><span class="fa fa-angle-left"></span></a></div>
-							</div>
-							<div class="app-bar-title col-lg-6 col-md-6 col-sm-6 col-xs-8 text-center">
-								<div class="app-bar-title">Game Play</div>
-							</div>
-							<div class="app-bar-search col-lg-3 col-md-3 col-sm-3 col-xs-2 text-right">
-								<!--<div class="app-bar-search"><a href="#"><span class="fa fa-plus"></span> Get More Cards</a></div>-->
+					<div class="app-bar-navigation row">
+						<div class="col-lg-3 col-md-4 col-sm-4 col-xs-4 text-left">
+							<div class="app-bar-menu-icon"><a id="game-play" href="02.home-screen.html"><span class="fa fa-angle-left"></span></a></div>
+						</div>
+						<div class="app-bar-title col-lg-4 col-md-6 col-sm-4 col-xs-4 text-center">
+							<div class="app-bar-title">Game Play</div>
+						</div>
+						<div class="app-bar-search col-lg-4 col-md-3 col-sm-4 col-xs-4 text-right">
+							<div class="app-bar-search">
+								
+								<div class="switch">
+									<input id="cmn-toggle-4" class="cmn-toggle cmn-toggle-round-flat" type="checkbox">
+									<label for="cmn-toggle-4"></label>
+								</div>
+								<div class="text-label">aggressive cards</div>
 							</div>
 						</div>
+					</div>
 						  
 						
 						<div class="app-content-game-play">
@@ -112,7 +119,7 @@
 			});
 		});
 	</script>
-	<script type="text/javascript" src='js/card-script.js'></script>
+	<script type="text/javascript" src='js/game-play-board.js'></script>
 	<!-- <script>
 	$(document).ready(function(){
 		  animate_card(360);

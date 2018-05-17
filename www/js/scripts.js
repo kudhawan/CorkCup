@@ -71,3 +71,14 @@ $(".input-number").keydown(function (e) {
             e.preventDefault();
         }
     });
+
+
+// show loading while ajax call
+var $loader = $('#loader').hide();
+$(document)
+    .ajaxStart(function () {
+        $loader.show();
+    })
+    .ajaxStop(function () {
+        $loader.hide();
+    });

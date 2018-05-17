@@ -236,8 +236,52 @@ reset_cards();
 
 }
 
+
+// get card content
+function getCardContent(handleData) {
+    // check aggressive mode enabled or not
+    var is_aggressive = (window.sessionStorage.getItem("checked")  == 'true') ? 'y': 'n';
+    var purchased = [];
+    var products = [];
+    var platform = window.device.platform;
+
+    if(window.localStorage.getItem('purchased') != null) {
+        purchased = JSON.parse(window.localStorage.getItem('purchased'));
+    }
+
+    for(var i=0; i< purchased.length; i++) {
+        products.push({
+            productId: purchased[i].productId,
+            signature:purchased[i].signature,
+            receipt: purchased[i].receipt
+        });		
+    }
+    
+    var data = {
+        is_aggressive: is_aggressive,
+        id1: 'id1',
+        id2: 'id2',
+        products:  products,
+        platform: platform
+    };
+
+    $.ajax({
+        url: 'http://45.79.7.27:81/corkcup/card/getaCard.php',
+        type: 'POST',
+        data: data,
+        success: function(result) {
+            handleData(result);
+        }, 
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+
+
 $(document).ready(function(){
 
+	
 		//card click event
 		// $('.card').click(function(){
 		// 	var card = $(this);
@@ -246,184 +290,50 @@ $(document).ready(function(){
 		// 		card.toggleClass('opened');
 		// 	},300);
 		// });
-		
-		var score1 = window.sessionStorage.getItem("1") ? window.sessionStorage.getItem("1") : 0;
-		var score2 = window.sessionStorage.getItem("2") ? window.sessionStorage.getItem("2") : 0;
 
-		$("input[name=" + "'quant[1]']").val(score1);
-		$("input[name=" + "'quant[2]']").val(score2);
 		
-		document.addEventListener("deviceready", function () {
+    document.addEventListener("deviceready", function () {
 			
-			stack_cards(0.2);	
-			
-			getCardContent(function(result) {
-		
-				// click event listen for card
-				$("#pack_cont").on('click', '.card', function(){
-					$(this).siblings('.card').off('click');
-					
-					if($(this).hasClass('opened')) {
-						close_all_cards();
-						setTimeout(function(){
-							$('#game-play')[0].click();
-						}, 1000);
-					}
-				});
-				
-				// trigger click event for automatically open card
-				setTimeout(function(){
-					// disable card click for prevent user click
-					$('.card').off('click');	
-		
-					var len = $(".card").length;
-					var random = Math.floor( Math.random() * len ) + 1;
-					var card = $('.card').eq(random);
-					card.toggleClass('open');
-					setTimeout(function(){
-						card.toggleClass('opened');	
-						if(Array.isArray(result)) {												
-							var output = result[0];
-							var top_tmp = card.find('.card-back-top').children().remove();
-							card.find('.card-back-top,.rotate').text(output.id).append(top_tmp);
-							card.find('.sub-heading').text(output.name);
-							card.find('.paragraph').text(output.description);
-						} else {
-							card.find('.sub-heading').remove();
-							card.find('.paragraph').text(result);
-						}
-		
-					},300);
-				}, 2000);
-			});	
-		}, true);
-	
-	
-
-	
-
-	// show loading while ajax call
-	var $loader = $('#loader').hide();
-	$(document)
-		.ajaxStart(function () {
-			$loader.show();
-		})
-		.ajaxStop(function () {
-			$loader.hide();
-		});
+        stack_cards(0.2);
+        
+        getCardContent(function(result) {
+    
+            // click event listen for card
+            $("#pack_cont").on('click', '.card', function(){
+                $(this).siblings('.card').off('click');
+                
+                if($(this).hasClass('opened')) {
+                    close_all_cards();
+                    setTimeout(function(){
+                        $('#game-play')[0].click();
+                    }, 1000);
+                }
+            });
+            
+            // trigger click event for automatically open card
+            setTimeout(function(){
+                // disable card click for prevent user click
+                $('.card').off('click');	
+    
+                var len = $(".card").length;
+                var random = Math.floor( Math.random() * len ) + 1;
+                var card = $('.card').eq(random);
+                card.toggleClass('open');
+                setTimeout(function(){
+                    card.toggleClass('opened');	
+                    if(Array.isArray(result)) {												
+                        var output = result[0];
+                        var top_tmp = card.find('.card-back-top').children().remove();
+                        card.find('.card-back-top,.rotate').text(output.id).append(top_tmp);
+                        card.find('.sub-heading').text(output.name);
+                        card.find('.paragraph').text(output.description);
+                    } else {
+                        card.find('.sub-heading').remove();
+                        card.find('.paragraph').text(result);
+                    }
+    
+                },500);
+            }, 500);
+        });	
+    }, true);
 });
-
-// get card content
-function getCardContent(handleData) {
-		// check aggressive mode enabled or not
-		var is_aggressive = $('#cmn-toggle-4').is(':checked') ? 'y': 'n';
-		var purchased = [];
-		var products = [];
-		var platform = window.device.platform;
-
-		if(window.localStorage.getItem('purchased') != null) {
-			purchased = JSON.parse(window.localStorage.getItem('purchased'));
-		}
-
-		for(var i=0; i< purchased.length; i++) {
-			products.push({
-				productId: purchased[i].productId,
-				signature:purchased[i].signature,
-				receipt: purchased[i].receipt
-			});		
-		}
-		
-		var data = {
-			is_aggressive: is_aggressive,
-			id1: 'id1',
-			id2: 'id2',
-			products:  products,
-			platform: platform
-		};
-
-		$.ajax({
-			url: 'http://45.79.7.27:81/corkcup/card/getaCard.php',
-			type: 'POST',
-			data: data,
-			success: function(result) {
-				handleData(result);
-			}, 
-			error: function(error) {
-				console.log(error);
-			}
-		});
-}
-
-function updateScore(sign, id) {
-	var initial;
-
-	if(!window.sessionStorage.getItem("initial")) {
-		initial = true;
-		window.sessionStorage.setItem("initial", "false");
-	} else {
-		initial = false;
-	}
-		
-
-	$.ajax({
-		url: 'http://45.79.7.27:81/corkcup/team/updateScore.php?id=' +id+ "&sign=" + sign + "&initial=" + initial,
-		success: function(result) {
-			if(result){
-				$("input[name=" + "'quant[" + result.id + "]']").val(result.scores);
-				window.sessionStorage.setItem(result.id, result.scores);
-			}
-		}, 
-		error: function(error) {
-			console.log(error);
-		}
-	});
-}
-
-function buy(productId) {
-	document.addEventListener("deviceready", function () {
-		inAppPurchase
-			.buy(productId)
-			.then(function (data) {
-				console.log(JSON.stringify(data));
-				var purchased = [];
-				if(window.localStorage.getItem('purchased') != null) {
-					purchased = JSON.parse(window.localStorage.getItem('purchased'));
-				}
-				purchased.push(data);
-				window.localStorage.setItem('purchased', JSON.stringify(purchased));
-
-				updateCardBought();
-			})
-			.catch(function (err) {
-				console.log(err);
-			});
-	}, false)
-}
-
-
-function restore() {
-	document.addEventListener("deviceready", function () {
-		inAppPurchase
-			.restorePurchases()
-			.then(function (purchases) {
-				console.log(JSON.stringify(purchases));
-				window.localStorage.setItem('purchased', JSON.stringify(purchases));
-				updateCardBought();
-			})
-			.catch(function (err) {
-				console.log(err);
-			});
-	}, false)
-}
-
-function updateCardBought() {
-	var purchased = [];
-
-	if(window.localStorage.getItem('purchased') != null) {
-		purchased = JSON.parse(window.localStorage.getItem('purchased'));
-	}
-
-	for(var i=0; i< purchased.length; i++) {
-		$('#' + purchased[i].productId).css('background', '#23d332');
-	}
-}
