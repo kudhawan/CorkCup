@@ -4,7 +4,8 @@
   "displayName": "CorkCup",
   "cordova": {
     "platforms": [
-      "android"
+      "android",
+      "ios"
     ],
     "plugins": {
       "cordova-plugin-whitelist": {},
@@ -15,6 +16,7 @@
   },
   "dependencies": {
     "cordova-android": "6.4.0",
+    "cordova-ios": "^4.5.4",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-inapppurchase": "^1.2.0",
     "cordova-plugin-splashscreen": "^5.0.2",
