@@ -1,6 +1,6 @@
 {
-  "name": "com.radiata.corkcup",
-  "version": "0.0.5",
+  "name": "radiata.corkcup",
+  "version": "0.0.2",
   "displayName": "CorkCup",
   "cordova": {
     "platforms": [
