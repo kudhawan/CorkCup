@@ -396,7 +396,7 @@ a.tap-button  {
 	margin-bottom:35px;
 }
 
-.app-menu-navigation > ul > li > button {
+.app-menu-navigation > ul > li > button, .app-menu-navigation button {
 	width:100%;
 	cursor:pointer;
 	border:2px solid #3a0309;
@@ -1420,5 +1420,23 @@ div.switch5 > input.switch:focus ~ label:before { box-shadow: 0px 0px 0px 3px rg
 
 
 
+.center-float {
+	position:relative;
+	top:100px;
+}
 
+.thumb-img-center {
 
+	padding-top:-20px;
+	padding-bottom:0px;
+}
+
+.thumb-img-center img {
+	max-width:110px;
+}
+
+.game-play-middle2 {
+	margin-top:-40px;
+	position:relative;
+	z-index:9999;
+}

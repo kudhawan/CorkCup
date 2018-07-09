@@ -243,7 +243,16 @@ function getCardContent(handleData) {
     var is_aggressive = (window.sessionStorage.getItem("checked")  == 'true') ? 'y': 'n';
     var purchased = [];
     var products = [];
-    var platform = window.device.platform;
+	var platform = window.device.platform;
+	
+	var initial;
+
+	if(!window.sessionStorage.getItem("initial")) {
+		initial = true;
+		window.sessionStorage.setItem("initial", "false");
+	} else {
+		initial = false;
+	}
 
     if(window.localStorage.getItem('purchased') != null) {
         purchased = JSON.parse(window.localStorage.getItem('purchased'));
@@ -262,7 +271,8 @@ function getCardContent(handleData) {
         id1: 'id1',
         id2: 'id2',
         products:  products,
-        platform: platform
+		platform: platform,
+		initial: initial
     };
 
     $.ajax({
