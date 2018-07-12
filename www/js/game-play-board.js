@@ -42,3 +42,7 @@ function updateScore(sign, id) {
 		}
 	});
 }
+
+function draw(id) {
+	window.sessionStorage.setItem('playid', id);
+}

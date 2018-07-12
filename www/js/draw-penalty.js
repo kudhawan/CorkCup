@@ -268,18 +268,21 @@ function getCardContent(handleData) {
     
     var data = {
         is_aggressive: is_aggressive,
-        id1: 'id1',
-        id2: 'id2',
+        id1: '1',
+        id2: '2',
         products:  products,
 		platform: platform,
-		initial: initial
+		initial: initial,
+		playid: window.sessionStorage.getItem('playid')
     };
 
     $.ajax({
-        url: 'http://45.79.7.27:81/corkcup/card/getaCard.php',
-        type: 'POST',
-        data: data,
-        success: function(result) {
+		url: 'http://45.79.7.27:81/corkcup/card/getaCard.php',
+		contentType: 'application/json; charset=utf-8',
+		type: 'POST',
+		data: JSON.stringify(data),
+		dataType:'json',
+		success: function(result) {
             handleData(result);
         }, 
         error: function(error) {
@@ -330,13 +333,18 @@ $(document).ready(function(){
                 var card = $('.card').eq(random);
                 card.toggleClass('open');
                 setTimeout(function(){
-                    card.toggleClass('opened');	
-                    if(Array.isArray(result)) {												
-                        var output = result[0];
+					card.toggleClass('opened');	
+					console.log(result);
+                    if(result['card']) {												
+                        var output = result['card'];
                         var top_tmp = card.find('.card-back-top').children().remove();
                         card.find('.card-back-top,.rotate').text(output.id).append(top_tmp);
                         card.find('.sub-heading').text(output.name);
-                        card.find('.paragraph').text(output.description);
+						card.find('.paragraph').text(output.description);
+						if(result['autoresponse']) {
+
+							window.sessionStorage.setItem(result['autoresponse'].id, result['autoresponse'].scores);
+						}	
                     } else {
                         card.find('.sub-heading').remove();
                         card.find('.paragraph').text(result);
