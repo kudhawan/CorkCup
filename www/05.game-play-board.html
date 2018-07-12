@@ -63,6 +63,10 @@
 										  </button>
 									  </span>
 									  <input type="text" name="quant[1]" class="form-control input-number" value="0" min="0" max="100" readonly>
+									  <select class="form-control" name="quant[1]">
+										<option value="1">1</option>
+										<option value="0.5">0.5</option>
+									  </select>
 									  <span class="input-group-btn">
 										  <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[1]"  onclick="updateScore('p', 1)">
 											  <span class="glyphicon glyphicon-plus"></span>
@@ -91,7 +95,11 @@
 											<span class="glyphicon glyphicon-minus"></span>
 										  </button>
 									  </span>
-									  <input type="text" name="quant[2]" class="form-control input-number" value="0" min="0" max="100" readonly>
+									  <input type="text" name="quant[2]" class="form-control input-number" value="0" min="0" max="100" readonly id="quant2">
+									  <select class="form-control" name="quant[2]">
+										  <option value="1">1</option>
+										  <option value="0.5">0.5</option>
+									  </select>
 									  <span class="input-group-btn">
 										  <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[2]" onclick="updateScore('p', 2)">
 											  <span class="glyphicon glyphicon-plus"></span>

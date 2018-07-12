@@ -15,11 +15,19 @@ $(document).ready(function(){
     var score2 = window.sessionStorage.getItem("2") ? window.sessionStorage.getItem("2") : 0;
 
     $("input[name=" + "'quant[1]']").val(score1);
-    $("input[name=" + "'quant[2]']").val(score2);
+	$("input[name=" + "'quant[2]']").val(score2);
+
+	$(".input-group select").hide();
+	
+	$(".input-group .input-number").click(function() {
+		$(".input-group select[name='" + $(this).attr('name')+"']").toggle();
+		$("input[name='" + $(this).attr('name') + "']").toggle();
+	});
 });
 
 function updateScore(sign, id) {
 	var initial;
+	var val = $(".input-group select[name='quant["+id+"]']").val();
 
 	if(!window.sessionStorage.getItem("initial")) {
 		initial = true;
@@ -27,13 +35,14 @@ function updateScore(sign, id) {
 	} else {
 		initial = false;
 	}
-		
+
 
 	$.ajax({
-		url: 'http://45.79.7.27:81/corkcup/team/updateScore.php?id=' +id+ "&sign=" + sign + "&initial=" + initial,
+		url: 'http://45.79.7.27:81/corkcup/team/updateScore.php?id=' +id+ "&sign=" + sign + "&initial=" + initial + "&select_score=" + val,
 		success: function(result) {
 			if(result){
 				$("input[name=" + "'quant[" + result.id + "]']").val(result.scores);
+				$("input[name=" + "'quant[" + result.id + "]']").trigger('click');
 				window.sessionStorage.setItem(result.id, result.scores);
 			}
 		}, 
