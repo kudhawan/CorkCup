@@ -70,5 +70,6 @@
     <plugin name="cordova-plugin-inapppurchase" spec="^1.2.0" />
     <plugin name="cordova-plugin-device" spec="^2.0.2" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
+    <plugin name="cordova-plugin-actionsheet" spec="^2.3.3" />
     <engine name="android" spec="6.4.0" />
 </widget>
