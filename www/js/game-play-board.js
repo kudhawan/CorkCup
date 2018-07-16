@@ -6,6 +6,10 @@ $(document).ready(function(){
 
 
 	  // var is_aggressive = $('#cmn-toggle-4').is(':checked') ? 'y': 'n';
+	  if(!window.sessionStorage.getItem("checked")) {
+		window.sessionStorage.setItem("checked", true);
+	  }
+
 	  $("#cmn-toggle-4").attr("checked", window.sessionStorage.getItem("checked") == 'true');
 
 
