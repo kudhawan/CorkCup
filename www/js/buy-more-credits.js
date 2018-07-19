@@ -1,17 +1,31 @@
-var productIds = ['sack_pack', 'back_pack', 'plaque_back', 'grimey_pack', 'all_pack'];
+function getProductIds(handleData) {
+	$.ajax({
+		url: 'http://45.79.7.27:81/corkcup/card/getaCard.php',
+		success: function(result) {
+			handleData(result);
+		},
+		error: function(error) {
+            console.log(error);
+        }	
+	});
+}
 
 function getProducts() {
 	document.addEventListener('deviceready', function() {
-		inAppPurchase
-			.getProducts(productIds)
-			.then(function(products) {
-				console.log('products', products);
-				if(products.length > 0) {
-					$("#load_products > button").css("display", "none");
-					for(var i=0; i< products.length; i++) {
-						$("#products").append('<li><button onclick="buy(\''+ products[i].productId +'\')" id='+ products[i].productId +' class="navigate"><span>'+ products[i].description +'</span><span>'+ products[i].price +'</span></button></li>');
+		getProductIds(function(productIds) {
+			productIds =  ['sack_pack', 'back_pack', 'plaque_pack', 'grimey_pack', 'all_pack'];
+			inAppPurchase
+				.getProducts(productIds)
+				.then(function(products) {
+					console.log('products', products);
+					if(products.length > 0) {
+						$("#load_products > button").css("display", "none");
+						for(var i=0; i< products.length; i++) {
+							products[i].title = products[i].title.replace("(CorkCup)", "");
+							$("#products").append('<li><button onclick="buy(\''+ products[i].productId +'\')" id='+ products[i].productId +' class="navigate"><span>'+ products[i].title +'</span>&nbsp;-&nbsp;' + products[i].price +'&nbsp;<span>/&nbsp;'+ products[i].description +'</span></button></li>');
+						}
 					}
-				}
+				});
 			});
 	}, false);
 }

@@ -432,6 +432,11 @@ a.tap-button  {
 	text-decoration:none;
 }
 
+.app-menu-navigation .note {
+	font-size: 14px;
+	margin-bottom: 15px;
+}
+
 /**** Skip Screen Style *********/
 
 .skip-screen {
@@ -1439,4 +1444,18 @@ div.switch5 > input.switch:focus ~ label:before { box-shadow: 0px 0px 0px 3px rg
 	margin-top:-40px;
 	position:relative;
 	z-index:9999;
+}
+
+/* Older device resolutions below 280px */
+
+@media screen and (min-width: 190px) and (max-width: 319px) {
+	
+	.sub-heading {
+		font-size:17px;
+		color:#e82a3a;
+	}
+	.paragraph {
+		font-size:12px;
+		line-height:19px;
+	}
 }
