@@ -1,6 +1,6 @@
 function getProductIds(handleData) {
 	$.ajax({
-		url: 'http://45.79.7.27:81/corkcup/card/getaCard.php',
+		url: 'http://45.79.7.27:81/corkcup/card/allproducts.php',
 		success: function(result) {
 			handleData(result);
 		},
@@ -13,7 +13,6 @@ function getProductIds(handleData) {
 function getProducts() {
 	document.addEventListener('deviceready', function() {
 		getProductIds(function(productIds) {
-			productIds =  ['sack_pack', 'back_pack', 'plaque_pack', 'grimey_pack', 'all_pack'];
 			inAppPurchase
 				.getProducts(productIds)
 				.then(function(products) {
