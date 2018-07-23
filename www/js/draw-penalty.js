@@ -335,11 +335,13 @@ $(document).ready(function(){
                 setTimeout(function(){
 					card.toggleClass('opened');	
 					console.log(result);
-                    if(result['card']) {												
-                        var output = result['card'];
+                    if(result['card'] && result['cardcode']) {												
+						var output = result['card'];
+						var output_color = result['cardcode'];
                         var top_tmp = card.find('.card-back-top').children().remove();
-                        card.find('.card-back-top,.rotate').text(output.id).append(top_tmp);
-                        card.find('.sub-heading').text(output.name);
+						card.find('.card-back-top,.rotate').text(output.id).append(top_tmp);
+						card.find('.card-back-top > span,.rotate > span').css('color', output_color.color_code);
+                        card.find('.sub-heading').text(output.name).css('color', output_color.color_code);
 						card.find('.paragraph').text(output.description);
 						if(result['autoresponse']) {
 
