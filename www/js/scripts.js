@@ -74,11 +74,11 @@ $(".input-number").keydown(function (e) {
 
 
 // show loading while ajax call
-var $loader = $('#loader').hide();
-$(document)
-    .ajaxStart(function () {
-        $loader.show();
-    })
-    .ajaxStop(function () {
-        $loader.hide();
-    });
+
+function showSpinner() {
+    $(".overlay").show();
+}
+
+function hideSpinner() {
+    $(".overlay").hide();
+}
