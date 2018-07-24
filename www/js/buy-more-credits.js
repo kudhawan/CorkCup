@@ -3,14 +3,15 @@ $(document).ready(function(){
 	getProducts();
 });
 
-function getProductIds(handleData) {
+function getProductIds(handleData, handleErr) {
 	$.ajax({
 		url: 'http://45.79.7.27:81/corkcup/card/allproducts.php',
 		success: function(result) {
 			handleData(result);
 		},
 		error: function(error) {
-            console.log(error);
+			console.log(error);
+			handleErr(error);
         }	
 	});
 }
@@ -18,7 +19,8 @@ function getProductIds(handleData) {
 function getProducts() {
 	document.addEventListener('deviceready', function() {
 		showSpinner();
-		getProductIds(function(productIds) {
+		getProductIds(function(result) {
+			var productIds = result.map(function(r) { return r.name });
 			inAppPurchase
 				.getProducts(productIds)
 				.then(function(products) {
@@ -27,7 +29,8 @@ function getProducts() {
 					if(products.length > 0) {						
 						for(var i=0; i< products.length; i++) {
 							products[i].title = products[i].title.replace("(CorkCup)", "");
-							$("#products").append('<li><button onclick="buy(\''+ products[i].productId +'\')" id='+ products[i].productId +' class="navigate"><span>'+ products[i].title +'</span>&nbsp;-&nbsp;' + products[i].price +'&nbsp;<span>/&nbsp;'+ products[i].description +'</span></button></li>');
+							$("#products").append('<li><button onclick="buy(\''+ products[i].productId +'\')" id='+ products[i].productId +' class="navigate" ><span>'+ products[i].title +'</span>&nbsp;-&nbsp;' + products[i].price +'&nbsp;<span>/&nbsp;'+ products[i].description +'</span></button></li>');										
+							$("#" + products[i].productId).css('background', result.find(function(r) { return r.name == products[i].productId })['color_code']);
 						}
 
 						restore();
@@ -38,7 +41,7 @@ function getProducts() {
 					hideSpinner();
 					$("#load_products > button").css("display", "block");
 				});
-			}).catch(function(err) {
+			}, function(err) {
 				hideSpinner();
 				$("#load_products > button").css("display", "block");
 			});
