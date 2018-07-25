@@ -26,7 +26,8 @@ function getProducts() {
 				.then(function(products) {
 					hideSpinner();
 					console.log('products', products);
-					if(products.length > 0) {						
+					if(products.length > 0) {
+						$("#load_products > button").css("display", "none");						
 						for(var i=0; i< products.length; i++) {
 							products[i].title = products[i].title.replace("(CorkCup)", "");
 							$("#products").append('<li><button onclick="buy(\''+ products[i].productId +'\')" id='+ products[i].productId +' class="navigate" ><span>'+ products[i].title +'</span>&nbsp;-&nbsp;' + products[i].price +'&nbsp;<span>/&nbsp;'+ products[i].description +'</span></button></li>');										
@@ -81,6 +82,6 @@ function updateCardBought() {
 	}
 
 	for(var i=0; i< purchased.length; i++) {
-		$('#' + purchased[i].productId).css('background', '#23d332');
+		$('#' + purchased[i].productId).addClass('disabled').attr("disabled", true);
 	}
 }

@@ -276,11 +276,13 @@ function getCardContent(handleData) {
 		playid: window.sessionStorage.getItem('playid')
     };
 
+	console.log(data);
+
     $.ajax({
 		url: 'http://45.79.7.27:81/corkcup/card/getaCard.php',
 		contentType: 'application/json; charset=utf-8',
 		type: 'POST',
-		data: data,
+		data: JSON.stringify(data),
 		dataType:'JSON',
 		success: function(result) {
             handleData(result);
