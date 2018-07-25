@@ -3,3 +3,4 @@ platforms
 plugins
 package-lock.json
 build-steps.txt
+release-android.sh

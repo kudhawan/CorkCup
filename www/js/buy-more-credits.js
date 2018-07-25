@@ -33,7 +33,7 @@ function getProducts() {
 							$("#" + products[i].productId).css('background', result.find(function(r) { return r.name == products[i].productId })['color_code']);
 						}
 
-						restore();
+						updateCardBought();
 					} else {
 						$("#load_products > button").css("display", "block");
 					}
@@ -63,25 +63,6 @@ function buy(productId) {
 				purchased.push(data);
 				window.localStorage.setItem('purchased', JSON.stringify(purchased));
 
-				updateCardBought();
-			})
-			.catch(function (err) {
-				hideSpinner();
-				console.log(err);
-			});
-	}, false)
-}
-
-
-function restore() {
-	document.addEventListener("deviceready", function () {
-		showSpinner();
-		inAppPurchase
-			.restorePurchases()
-			.then(function (purchases) {
-				hideSpinner();
-				console.log(JSON.stringify(purchases));
-				window.localStorage.setItem('purchased', JSON.stringify(purchases));
 				updateCardBought();
 			})
 			.catch(function (err) {

@@ -45,5 +45,15 @@ var app = {
         // receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
+
+        inAppPurchase
+			.restorePurchases()
+			.then(function (purchases) {
+				console.log(JSON.stringify(purchases));
+				window.localStorage.setItem('purchased', JSON.stringify(purchases));
+			})
+			.catch(function (err) {
+				console.log(err);
+			});
     }
 };
