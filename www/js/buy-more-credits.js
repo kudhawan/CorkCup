@@ -55,6 +55,7 @@ function buy(productId) {
 			.buy(productId)
 			.then(function (data) {
 				hideSpinner();
+				data['productId'] = productId;
 				console.log(JSON.stringify(data));
 				var purchased = [];
 				if(window.localStorage.getItem('purchased') != null) {

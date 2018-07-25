@@ -280,8 +280,8 @@ function getCardContent(handleData) {
 		url: 'http://45.79.7.27:81/corkcup/card/getaCard.php',
 		contentType: 'application/json; charset=utf-8',
 		type: 'POST',
-		data: JSON.stringify(data),
-		dataType:'json',
+		data: data,
+		dataType:'JSON',
 		success: function(result) {
             handleData(result);
         }, 
