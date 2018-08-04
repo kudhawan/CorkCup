@@ -54,6 +54,24 @@ var app = {
 			})
 			.catch(function (err) {
 				console.log(err);
-			});
+            });
+            
+        var data = {
+            "device_id": device.uuid
+        };
+
+        $.ajax({
+            url: 'http://45.79.7.27:81/corkcup/team/insertUser.php',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            dataType: 'JSON',
+            success: function (response) {
+                console.log(response)
+                if(response.success == 1) {
+                    window.sessionStorage.setItem("user_id", response.user_id);
+                }
+            }
+        });
     }
 };

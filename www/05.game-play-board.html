@@ -58,13 +58,13 @@
 								<div class="button-select">
 									<div class="input-group">
 									  <span class="input-group-btn">
-										  <button type="button" class="btn btn-danger btn-number"  data-type="m" data-field="1">
+										  <button type="button" class="btn btn-danger btn-number"  data-type="m" data-field="TeamA_score">
 											<span class="glyphicon glyphicon-minus"></span>
 										  </button>
 									  </span>
-									  <input type="text" name="1" class="form-control input-number" value="0" min="0" max="100" readonly>
+									  <input type="text" name="TeamA_score" class="form-control input-number" value="0" min="0" max="100" readonly>
 									  <span class="input-group-btn">
-										  <button type="button" class="btn btn-success btn-number" data-type="p" data-field="1">
+										  <button type="button" class="btn btn-success btn-number" data-type="p" data-field="TeamA_score">
 											  <span class="glyphicon glyphicon-plus"></span>
 										  </button>
 									  </span>
@@ -76,24 +76,24 @@
 							</div>
 							<div class="game-play-middle"><div class="button-draw"><button onclick="window.location.href='06.draw-penalty.html'" class="navigate" data-page-name="draw-penalty" data-page-trans="slide-in-from-right">DRAW PENALTY</button></div></div> -->
 							<div class="center-float">
-								<div class="game-play-middle1"><div class="button-draw"><button onclick="draw(1);window.location.href='06.draw-penalty.html'" class="navigate" data-page-name="draw-penalty" data-page-trans="slide-in-from-right">DRAW PENALTY</button></div></div>
+								<div class="game-play-middle1"><div class="button-draw"><button onclick="draw('TeamA_score');window.location.href='06.draw-penalty.html'" class="navigate" data-page-name="draw-penalty" data-page-trans="slide-in-from-right">DRAW PENALTY</button></div></div>
 								<div class="thumb-img-center">
 									<img src="images/thumbs-up.png" class="max-width-img1"  alt="">
 								</div>
-								<div class="game-play-middle2"><div class="button-draw"><button onclick="draw(2);window.location.href='06.draw-penalty.html'" class="navigate" data-page-name="draw-penalty" data-page-trans="slide-in-from-right">DRAW PENALTY</button></div></div>
+								<div class="game-play-middle2"><div class="button-draw"><button onclick="draw('TeamB_score');window.location.href='06.draw-penalty.html'" class="navigate" data-page-name="draw-penalty" data-page-trans="slide-in-from-right">DRAW PENALTY</button></div></div>
 							</div>
 
 							<div class="game-play-bottom">
 								<div class="button-select">
 									<div class="input-group">
 									  <span class="input-group-btn">
-										  <button type="button" class="btn btn-danger btn-number"  data-type="m" data-field="2">
+										  <button type="button" class="btn btn-danger btn-number"  data-type="m" data-field="TeamB_score">
 											<span class="glyphicon glyphicon-minus"></span>
 										  </button>
 									  </span>
-									  <input type="text" name="2" class="form-control input-number" value="0" min="0" max="100" readonly id="quant2">
+									  <input type="text" name="TeamB_score" class="form-control input-number" value="0" min="0" max="100" readonly id="quant2">
 									  <span class="input-group-btn">
-										  <button type="button" class="btn btn-success btn-number" data-type="p" data-field="2">
+										  <button type="button" class="btn btn-success btn-number" data-type="p" data-field="TeamB_score">
 											  <span class="glyphicon glyphicon-plus"></span>
 										  </button>
 									  </span>

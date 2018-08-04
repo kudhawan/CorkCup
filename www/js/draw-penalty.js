@@ -239,53 +239,24 @@ reset_cards();
 
 // get card content
 function getCardContent(handleData) {
-    // check aggressive mode enabled or not
-    var is_aggressive = (window.sessionStorage.getItem("checked")  == 'true') ? 'y': 'n';
-    var purchased = [];
-    var products = [];
-	var platform = window.device.platform;
 	
-	var initial;
-
-	if(!window.sessionStorage.getItem("initial")) {
-		initial = true;
-		window.sessionStorage.setItem("initial", "false");
-	} else {
-		initial = false;
-	}
-
-    if(window.localStorage.getItem('purchased') != null) {
-        purchased = JSON.parse(window.localStorage.getItem('purchased'));
-    }
-
-    for(var i=0; i< purchased.length; i++) {
-        products.push({
-            productId: purchased[i].productId,
-            signature:purchased[i].signature,
-            receipt: purchased[i].receipt
-        });		
-    }
-    
-    var data = {
-        is_aggressive: is_aggressive,
-        id1: '1',
-        id2: '2',
-        products:  products,
-		platform: platform,
-		initial: initial,
-		playid: window.sessionStorage.getItem('playid')
-    };
-
-	console.log(data);
-
+	var data = {
+		"user_id": window.sessionStorage.getItem("user_id"),
+		"is_aggressive": (window.sessionStorage.getItem("checked")  == 'true') ? 'y': 'n',
+		"play_team": window.sessionStorage.getItem("playid")
+	};
+	
     $.ajax({
-		url: 'http://45.79.7.27:81/corkcup/card/getaCard.php',
-		contentType: 'application/json; charset=utf-8',
+		url: 'http://45.79.7.27:81/corkcup/card/displayCards.php',
 		type: 'POST',
+		contentType: 'application/json',
 		data: JSON.stringify(data),
-		dataType:'JSON',
+		dataType: 'JSON',
 		success: function(result) {
-            handleData(result);
+			console.log(data, result)
+			if(result.success == 1) {
+				handleData(result);
+			}
         }, 
         error: function(error) {
             console.log(error);
@@ -336,18 +307,14 @@ $(document).ready(function(){
                 card.toggleClass('open');
                 setTimeout(function(){
 					card.toggleClass('opened');	
-					console.log(result);
-                    if(result['card']) {												
-						var output = result['card'];
-					    var top_tmp = card.find('.card-back-top').children().remove();
+					console.log(result);										    
+                    if(result) {	
+						var output = result;											
+						var top_tmp = card.find('.card-back-top').children().remove();
 						card.find('.card-back-top,.rotate').text(output.id).append(top_tmp);
 						card.find('.card-back-top > span,.rotate > span');
                         card.find('.sub-heading').text(output.name);
 						card.find('.paragraph').text(output.description);
-						if(result['autoresponse']) {
-
-							window.sessionStorage.setItem(result['autoresponse'].id, result['autoresponse'].scores);
-						}	
                     } else {
                         card.find('.sub-heading').remove();
                         card.find('.paragraph').text(result);

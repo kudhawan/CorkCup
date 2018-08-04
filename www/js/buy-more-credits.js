@@ -7,7 +7,11 @@ function getProductIds(handleData, handleErr) {
 	$.ajax({
 		url: 'http://45.79.7.27:81/corkcup/card/allproducts.php',
 		success: function(result) {
-			handleData(result);
+			if(result.success == 1) {
+				handleData(result.message);
+			} else{
+				handleErr(result);
+			}
 		},
 		error: function(error) {
 			console.log(error);
@@ -66,6 +70,7 @@ function buy(productId) {
 				window.localStorage.setItem('purchased', JSON.stringify(purchased));
 
 				updateCardBought();
+				userOrder(data);
 			})
 			.catch(function (err) {
 				hideSpinner();
@@ -84,4 +89,28 @@ function updateCardBought() {
 	for(var i=0; i< purchased.length; i++) {
 		$('#' + purchased[i].productId).addClass('disabled').attr("disabled", true);
 	}
+}
+
+function userOrder(data) {
+
+	var data = {
+		user_id: window.sessionStorage.getItem("user_id"),
+		products: [{
+			productId: data.productId,
+			signature: data.signature,
+			receipt: data.receipt
+		}],
+		platform:  device.platform,
+	};
+
+	$.ajax({
+		url:'http://45.79.7.27:81/corkcup/team/userOrder.php',
+		method: 'POST',
+		contentType: 'application/json',
+		data: JSON.stringify(data),
+		dataType: 'JSON',
+		success: function(result) {
+			console.log(result);
+		}
+	})
 }
