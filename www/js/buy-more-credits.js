@@ -8,7 +8,7 @@ function getProductIds(handleData, handleErr) {
 		url: 'http://45.79.7.27:81/corkcup/card/allproducts.php',
 		success: function(result) {
 			if(result.success == 1) {
-				handleData(result.message);
+				handleData(result.allproducts);
 			} else{
 				handleErr(result);
 			}
