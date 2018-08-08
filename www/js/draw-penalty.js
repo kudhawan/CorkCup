@@ -239,11 +239,20 @@ reset_cards();
 
 // get card content
 function getCardContent(handleData) {
+	var initial;
+	
+	if(!window.sessionStorage.getItem("initial")) {
+		initial = true;
+		window.sessionStorage.setItem("initial", "false");
+	} else {
+		initial = false;
+	}
 	
 	var data = {
 		"user_id": window.sessionStorage.getItem("user_id"),
 		"is_aggressive": (window.sessionStorage.getItem("checked")  == 'true') ? 'y': 'n',
-		"play_team": window.sessionStorage.getItem("playid")
+		"play_team": window.sessionStorage.getItem("playid"),
+		"initial": initial
 	};
 	
     $.ajax({
