@@ -321,8 +321,8 @@ $(document).ready(function(){
 						var output = result;											
 						var top_tmp = card.find('.card-back-top').children().remove();
 						card.find('.card-back-top,.rotate').text(output.id).append(top_tmp);
-						card.find('.card-back-top > span,.rotate > span');
-                        card.find('.sub-heading').text(output.name);
+						card.find('.card-back-top > span,.rotate > span').css('color', output.color_code);
+                        card.find('.sub-heading').text(output.name).css('color', output.color_code);
 						card.find('.paragraph').text(output.description);
                     } else {
                         card.find('.sub-heading').remove();

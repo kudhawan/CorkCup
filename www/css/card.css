@@ -140,3 +140,9 @@ button{
     left: 0;
     opacity: 0.5;
 }
+
+.move-up {
+	position:relative;
+	z-index:99999;
+	margin-top:-18px;
+}
