@@ -309,27 +309,22 @@ $(document).ready(function(){
             setTimeout(function(){
                 // disable card click for prevent user click
                 $('.card').off('click');	
-    
-                var len = $(".card").length;
-                var random = Math.floor( Math.random() * len ) + 1;
-                var card = $('.card').eq(random);
+             	var card = $('.card:first-child');
                 card.toggleClass('open');
-                setTimeout(function(){
-					card.toggleClass('opened');	
+                setTimeout(function(){					
 					console.log(result);										    
                     if(result) {	
-						var output = result;											
 						var top_tmp = card.find('.card-back-top').children().remove();
-						card.find('.card-back-top,.rotate').text(output.id).append(top_tmp);
-						card.find('.card-back-top > span,.rotate > span').css('color', output.color_code);
-						card.find('.card-back-top, .card-back-bottom').css('background', output.color_code);
-                        card.find('.sub-heading').text(output.name).css('color', output.color_code);
-						card.find('.paragraph').text(output.description);
+						card.find('.card-back-top,.rotate').text(result.id).append(top_tmp);
+						card.find('.card-back-top > span,.rotate > span').css('color', result.color_code);
+						card.find('.card-back-top, .card-back-bottom').css('background', result.color_code);
+                        card.find('.sub-heading').text(result.name).css('color', result.color_code);
+						card.find('.paragraph').text(result.description);
                     } else {
                         card.find('.sub-heading').remove();
-                        card.find('.paragraph').text(result);
+                        card.find('.paragraph').text(result.message);
                     }
-    
+					card.toggleClass('opened');	
                 },500);
             }, 500);
         });	
