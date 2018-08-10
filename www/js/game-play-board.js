@@ -61,7 +61,7 @@ function updateScore(sign, id, select_score) {
 	}
 
 	var data = {
-		"user_id": window.sessionStorage.getItem("user_id"),
+		"user_id": device.uuid,
 		"play_team": id,
 		"sign" : sign,
 		"select_score": select_score,

@@ -249,7 +249,7 @@ function getCardContent(handleData) {
 	}
 	
 	var data = {
-		"user_id": window.sessionStorage.getItem("user_id"),
+		"user_id": device.uuid,
 		"is_aggressive": (window.sessionStorage.getItem("checked")  == 'true') ? 'y': 'n',
 		"play_team": window.sessionStorage.getItem("playid"),
 		"initial": initial
@@ -322,6 +322,7 @@ $(document).ready(function(){
 						var top_tmp = card.find('.card-back-top').children().remove();
 						card.find('.card-back-top,.rotate').text(output.id).append(top_tmp);
 						card.find('.card-back-top > span,.rotate > span').css('color', output.color_code);
+						card.find('.card-back-top, .card-back-bottom').css('background', output.color_code);
                         card.find('.sub-heading').text(output.name).css('color', output.color_code);
 						card.find('.paragraph').text(output.description);
                     } else {

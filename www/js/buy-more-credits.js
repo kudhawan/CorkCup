@@ -94,7 +94,7 @@ function updateCardBought() {
 function userOrder(data) {
 
 	var data = {
-		user_id: window.sessionStorage.getItem("user_id"),
+		user_id: device.uuid,
 		products: [{
 			productId: data.productId,
 			signature: data.signature,
