@@ -1465,3 +1465,10 @@ div.switch5 > input.switch:focus ~ label:before { box-shadow: 0px 0px 0px 3px rg
 	background-color: #cccccc !important;
 	color: #626262 !important;
 }
+
+@media screen and (min-width: 375px) and (max-width: 700px){
+	.game-play-middle1 {
+		position:relative;
+		top:20px;
+	}
+}
