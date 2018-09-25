@@ -99,7 +99,7 @@ function userOrder(data) {
 			productId: data.productId,
 			signature: data.signature,
 			receipt: data.receipt,
-			transactionId: data,transactionId
+			transactionId: data.transactionId
 		}],
 		platform:  device.platform,
 	};
