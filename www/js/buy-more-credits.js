@@ -93,25 +93,27 @@ function updateCardBought() {
 
 function userOrder(data) {
 
-	var data = {
-		user_id: device.uuid,
-		products: [{
-			productId: data.productId,
-			signature: data.signature,
-			receipt: data.receipt,
-			transactionId: data.transactionId
-		}],
-		platform:  device.platform,
-	};
+	window.plugins.uniqueDeviceID.get(function (uuid) {
+		var data = {
+			user_id: uuid,
+			products: [{
+				productId: data.productId,
+				signature: data.signature,
+				receipt: data.receipt,
+				transactionId: data.transactionId
+			}],
+			platform:  device.platform,
+		};
 
-	$.ajax({
-		url:'http://45.79.7.27:81/corkcup/team/userOrder.php',
-		method: 'POST',
-		contentType: 'application/json',
-		data: JSON.stringify(data),
-		dataType: 'JSON',
-		success: function(result) {
-			console.log(result);
-		}
-	})
+		$.ajax({
+			url:'http://45.79.7.27:81/corkcup/team/userOrder.php',
+			method: 'POST',
+			contentType: 'application/json',
+			data: JSON.stringify(data),
+			dataType: 'JSON',
+			success: function(result) {
+				console.log(result);
+			}
+		});
+	});
 }
