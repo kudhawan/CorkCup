@@ -95,7 +95,7 @@ function userOrder(data) {
 
 	window.plugins.uniqueDeviceID.get(function (uuid) {
 		var data = {
-			user_id: uuid,
+			user_id: device.uuid,
 			products: [{
 				productId: data.productId,
 				signature: data.signature,
@@ -104,6 +104,10 @@ function userOrder(data) {
 			}],
 			platform:  device.platform,
 		};
+
+		if(device.platform.toLowerCase() == 'ios') {
+			data['user_id'] = uuid
+		}
 
 		$.ajax({
 			url:'http://45.79.7.27:81/corkcup/team/userOrder.php',
