@@ -3,6 +3,8 @@ $(document).ready(function(){
 	getProducts();
 });
 
+var all_pack = 'all_pack';
+
 function getProductIds(handleData, handleErr) {
 	$.ajax({
 		url: 'http://45.79.7.27:81/corkcup/card/allproducts.php',
@@ -25,6 +27,7 @@ function getProducts() {
 		showSpinner();
 		getProductIds(function(result) {
 			var productIds = result.map(function(r) { return r.name });
+			window.sessionStorage.setItem('productIds', JSON.stringify(productIds));
 			inAppPurchase
 				.getProducts(productIds)
 				.then(function(products) {
@@ -38,7 +41,8 @@ function getProducts() {
 							$("#" + products[i].productId).css('background', result.find(function(r) { return r.name == products[i].productId })['color_code']);
 						}
 
-						updateCardBought();
+						restorePurchases();
+						
 					} else {
 						$("#load_products > button").css("display", "block");
 					}
@@ -63,11 +67,17 @@ function buy(productId) {
 				data['productId'] = productId;
 				console.log(JSON.stringify(data));
 				var purchased = [];
-				if(window.localStorage.getItem('purchased') != null) {
-					purchased = JSON.parse(window.localStorage.getItem('purchased'));
+				if(window.sessionStorage.getItem('purchased') != null) {
+					purchased = JSON.parse(window.sessionStorage.getItem('purchased'));
 				}
-				purchased.push(data);
-				window.localStorage.setItem('purchased', JSON.stringify(purchased));
+
+				if(productId === 'all_pack') {
+					purchased = JSON.parse(window.sessionStorage.getItem('productIds'));
+				} else {
+					purchased.push(productId);
+				}
+
+				window.sessionStorage.setItem('purchased', JSON.stringify(purchased));
 
 				updateCardBought();
 				userOrder(data);
@@ -82,13 +92,32 @@ function buy(productId) {
 function updateCardBought() {
 	var purchased = [];
 
-	if(window.localStorage.getItem('purchased') != null) {
-		purchased = JSON.parse(window.localStorage.getItem('purchased'));
+	if(window.sessionStorage.getItem('purchased') != null) {
+		purchased = JSON.parse(window.sessionStorage.getItem('purchased'));
 	}
 
+	if(purchased.indexOf(all_pack) > -1) {
+		purchased = JSON.parse(window.sessionStorage.getItem('productIds'));
+	};
+
 	for(var i=0; i< purchased.length; i++) {
-		$('#' + purchased[i].productId).addClass('disabled').attr("disabled", true);
+		$('#' + purchased[i]).addClass('disabled').attr("disabled", true);
 	}
+}
+
+function restorePurchases() {
+	inAppPurchase
+	.restorePurchases()
+	.then(function (purchases) {
+		console.log(JSON.stringify(purchases));
+		purchases = purchases.map(function(p) { return p.productId; });
+		window.sessionStorage.setItem('purchased', JSON.stringify(purchases));
+
+		updateCardBought();
+	})
+	.catch(function (err) {
+		console.log(err);
+	});
 }
 
 function userOrder(data) {

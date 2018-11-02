@@ -49,8 +49,9 @@ var app = {
         inAppPurchase
 			.restorePurchases()
 			.then(function (purchases) {
-				console.log(JSON.stringify(purchases));
-				window.localStorage.setItem('purchased', JSON.stringify(purchases));
+                console.log(JSON.stringify(purchases));
+                purchases = purchases.map(function(p) { return p.productId; });
+				window.sessionStorage.setItem('purchased', JSON.stringify(purchases));
 			})
 			.catch(function (err) {
 				console.log(err);
