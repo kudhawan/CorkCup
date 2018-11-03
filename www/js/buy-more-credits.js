@@ -123,7 +123,7 @@ function restorePurchases() {
 function userOrder(data) {
 
 	window.plugins.uniqueDeviceID.get(function (uuid) {
-		var data = {
+		var body = {
 			user_id: device.uuid,
 			products: [{
 				productId: data.productId,
@@ -135,14 +135,14 @@ function userOrder(data) {
 		};
 
 		if(device.platform.toLowerCase() == 'ios') {
-			data['user_id'] = uuid
+			body['user_id'] = uuid;
 		}
 
 		$.ajax({
 			url:'http://45.79.7.27:81/corkcup/team/userOrder.php',
 			method: 'POST',
 			contentType: 'application/json',
-			data: JSON.stringify(data),
+			data: JSON.stringify(body),
 			dataType: 'JSON',
 			success: function(result) {
 				console.log(result);

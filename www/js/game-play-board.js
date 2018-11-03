@@ -51,42 +51,52 @@ function valuesSheet() {
 }
 
 function updateScore(sign, id, select_score) {
-	var initial;
-	
-	if(!window.sessionStorage.getItem("initial")) {
-		initial = true;
-		window.sessionStorage.setItem("initial", "false");
-	} else {
-		initial = false;
-	}
 
-	var data = {
-		"user_id": device.uuid,
-		"play_team": id,
-		"sign" : sign,
-		"select_score": select_score,
-		"initial": initial
-	};
-	
-	$.ajax({
-		url: 'http://45.79.7.27:81/corkcup/team/updateTeamScore.php',
-		method: 'POST',
-		contentType: 'application/json',
-		data: JSON.stringify(data),
-		dataType: 'JSON',
-		success: function(result) {
-			console.log(result, data);
-			if(result.success == 1){
-				$("input[name=TeamA_score]").val(result['TeamA_score']);
-				$("input[name=TeamB_score]").val(result['TeamB_score']);
-				window.sessionStorage.setItem('TeamA_score', result['TeamA_score']);
-				window.sessionStorage.setItem('TeamB_score', result['TeamB_score']);
+	document.addEventListener("deviceready", function() {
+		window.plugins.uniqueDeviceID.get(function (uuid) {
+
+			var initial;
+			
+			if(!window.sessionStorage.getItem("initial")) {
+				initial = true;
+				window.sessionStorage.setItem("initial", "false");
+			} else {
+				initial = false;
 			}
-		}, 
-		error: function(error) {
-			console.log(error);
-		}
-	});
+
+			var data = {
+				"user_id": device.uuid,
+				"play_team": id,
+				"sign" : sign,
+				"select_score": select_score,
+				"initial": initial
+			};
+
+			if(device.platform.toLowerCase() == 'ios') {
+				data['user_id'] = uuid;
+			}
+			
+			$.ajax({
+				url: 'http://45.79.7.27:81/corkcup/team/updateTeamScore.php',
+				method: 'POST',
+				contentType: 'application/json',
+				data: JSON.stringify(data),
+				dataType: 'JSON',
+				success: function(result) {
+					console.log(result, data);
+					if(result.success == 1){
+						$("input[name=TeamA_score]").val(result['TeamA_score']);
+						$("input[name=TeamB_score]").val(result['TeamB_score']);
+						window.sessionStorage.setItem('TeamA_score', result['TeamA_score']);
+						window.sessionStorage.setItem('TeamB_score', result['TeamB_score']);
+					}
+				}, 
+				error: function(error) {
+					console.log(error);
+				}
+			});
+		});
+	}, false);
 }
 
 function draw(id) {

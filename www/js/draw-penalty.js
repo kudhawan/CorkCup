@@ -239,38 +239,47 @@ reset_cards();
 
 // get card content
 function getCardContent(handleData) {
-	var initial;
-	
-	if(!window.sessionStorage.getItem("initial")) {
-		initial = true;
-		window.sessionStorage.setItem("initial", "false");
-	} else {
-		initial = false;
-	}
-	
-	var data = {
-		"user_id": device.uuid,
-		"is_aggressive": (window.sessionStorage.getItem("checked")  == 'true') ? 'y': 'n',
-		"play_team": window.sessionStorage.getItem("playid"),
-		"initial": initial
-	};
-	
-    $.ajax({
-		url: 'http://45.79.7.27:81/corkcup/card/displayCards.php',
-		type: 'POST',
-		contentType: 'application/json',
-		data: JSON.stringify(data),
-		dataType: 'JSON',
-		success: function(result) {
-			console.log(data, result)
-			if(result.success == 1) {
-				handleData(result);
+
+	document.addEventListener("deviceready", function() {
+		window.plugins.uniqueDeviceID.get(function (uuid) {
+			var initial;
+			
+			if(!window.sessionStorage.getItem("initial")) {
+				initial = true;
+				window.sessionStorage.setItem("initial", "false");
+			} else {
+				initial = false;
 			}
-        }, 
-        error: function(error) {
-            console.log(error);
-        }
-    });
+			
+			var data = {
+				"user_id": device.uuid,
+				"is_aggressive": (window.sessionStorage.getItem("checked")  == 'true') ? 'y': 'n',
+				"play_team": window.sessionStorage.getItem("playid"),
+				"initial": initial
+			};
+
+			if(device.platform.toLowerCase() == 'ios') {
+				data['user_id'] = uuid;
+			}
+			
+			$.ajax({
+				url: 'http://45.79.7.27:81/corkcup/card/displayCards.php',
+				type: 'POST',
+				contentType: 'application/json',
+				data: JSON.stringify(data),
+				dataType: 'JSON',
+				success: function(result) {
+					console.log(data, result)
+					if(result.success == 1) {
+						handleData(result);
+					}
+				}, 
+				error: function(error) {
+					console.log(error);
+				}
+			});
+		});
+	}, false);
 }
 
 
